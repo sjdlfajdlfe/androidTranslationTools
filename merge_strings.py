@@ -7,7 +7,8 @@ from xml.dom import minidom
  
 def clear_null_bytes(string):
     return string.replace('\0', '')
-# 读取文件
+
+#read file key
 def read_file(file_path):
     xmldoc = xml.dom.minidom.parse(file_path)
     code = xmldoc.getElementsByTagName('string')
@@ -20,18 +21,18 @@ def read_file(file_path):
     return dict(Counter(array))
  
 module_path = '/Users/liuwenji/Desktop'
-filename = module_path + '/merge.xml'
+filename = module_path + '/strings.xml'
+oldFileName = module_path + '/old_strings.xml'
 
-# filename根据自己的文件路径替换
+# merge old and new strings file
 if __name__ == '__main__':
     dic = read_file(filename)
-    oldxmldoc = xml.dom.minidom.parse('/Users/liuwenji/Desktop/old_boo_strings.xml')
+    oldxmldoc = xml.dom.minidom.parse(oldFileName)
     oldcode = oldxmldoc.getElementsByTagName('string')
     doc = minidom.Document()
     resources = doc.createElement('resources')
     doc.appendChild(resources)
-    new_array = []
-    # 打印重复的字符串
+    new_array = [] 
     for key in dic:
         if dic[key] > 1:
             print(key,' : ',dic[key])
